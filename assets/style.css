@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 ::selection {
@@ -10,8 +9,7 @@
 }
 
 body {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family: "メイリオ", Verdana, "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, Meiryo, sans-serif;
   color: #0d122b;
   border-top: 5px solid #f22f46;
 }
@@ -23,9 +21,9 @@ header {
   margin: 0 auto;
 }
 
-header h1 {
+.manage {
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(148, 151, 155, 0.2);
+  border-bottom: 1px solid #eeeeee;
 }
 
 a {
@@ -34,40 +32,33 @@ a {
 
 main {
   margin: 0 auto 6em;
-  padding: 0 2em;
+  padding: 4em;
   max-width: 800px;
 }
 
-main p {
+.projects {
   margin-bottom: 2em;
 }
 
-main p code {
-  font-size: 16px;
-  font-family: 'Fira Mono', monospace;
-  color: #f22f46;
-  background-color: #f9f9f9;
-  box-shadow: inset 0 0 0 1px #e8e8e8;
-  font-size: inherit;
-  line-height: 1.2;
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  display: inline-block;
-  white-space: pre-wrap;
+.project-item {
+  padding-top: 10px;
+  font-size: 3.0rem;
 }
 
-main h2 {
-  margin-bottom: 1em;
+.project-item-vs{
+  font-size: 3.0rem;
+}
+
+.item-a {
+  border: 3px solid #cc6633;
+}
+
+.item-b {
+  border: 3px solid #006699;
 }
 
 footer {
   margin: 0 auto;
   max-width: 800px;
   text-align: center;
-}
-
-footer p {
-  border-top: 1px solid rgba(148, 151, 155, 0.2);
-  padding-top: 2em;
-  margin: 0 2em;
 }
