@@ -1,4 +1,5 @@
 let syncMap, syncClient;
+let isUpdate = 1;
 $(function () {
     $.getJSON('./env', function (env) {
         $('.item-a .project-item-number').html(E164_to_0ABJ(env.PHONE_NUMBER_A));
@@ -31,19 +32,21 @@ $(function () {
     let updateList = function () {
         $.each(['item-a', 'item-b'], function (i, item_name) {
             syncMap.get('poll-' + item_name).then(function (item) {
-                $('.status').html('受付中');
-                $('.' + item_name + ' .project-item-count').html(item.value.list.length);
-                if (item.value.list.length == 0) {
-                    $('.phone-number-' + item_name).html('');
-                }
-                $.each(item.value.list, function (i, poll) {
-                    if (!$("#" + poll.call_sid)[0]) {
-                        const at_time = new Date(poll.at_time);
-                        const t = at_time.getHours() + ":" + at_time.getMinutes() + ":" + at_time.getSeconds();
-                        poll_html = '<div class="phone-number" id="' + poll.call_sid + '">' + t + " " + poll.from + '</div>';
-                        $('.phone-number-' + item_name).append(poll_html);
+                if(isUpdate) {
+                    $('.status').html('受付中');
+                    $('.' + item_name + ' .project-item-count').html(item.value.list.length);
+                    if (item.value.list.length == 0) {
+                        $('.phone-number-' + item_name).html('');
                     }
-                });
+                    $.each(item.value.list, function (i, poll) {
+                        if (!$("#" + poll.call_sid)[0]) {
+                            const at_time = new Date(poll.at_time);
+                            const t = at_time.getHours() + ":" + at_time.getMinutes() + ":" + at_time.getSeconds();
+                            poll_html = '<div class="phone-number" id="' + poll.call_sid + '">' + t + " " + poll.from + '</div>';
+                            $('.phone-number-' + item_name).append(poll_html);
+                        }
+                    });
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -52,6 +55,9 @@ $(function () {
 
     $('#btnStart').on('click', function () {
         start_count();
+    });
+    $('#btnStop').on('click', function () {
+        stop_count();
     });
     $('#btnRemoveMap').on('click', function () {
         remove_map();
@@ -63,6 +69,18 @@ $(function () {
                 console.error(err);
             });
         });
+    }
+
+    let stop_count = function () {
+        if(isUpdate){
+            isUpdate = 0;
+            $('.status').html('停止中');
+            $('#btnStop').html('再開');
+        }else{
+            isUpdate = 1;
+            $('#btnStop').html('締切');
+            updateList();
+        }
     }
 
     let remove_map = function () {
